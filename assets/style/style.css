@@ -14,7 +14,7 @@ body, input, button {
     padding:10px 50px ;
     position: sticky;
     top: 0;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .none {
@@ -425,4 +425,16 @@ header h1 {
 .form-edit-container h2 {
     text-align: center;
     color: #2D3E50;
+}
+
+footer {
+    text-align: center;
+    color: #eaf3fa;
+    background-color: #2D3E50;
+    padding: 20px;
+}
+
+footer p {
+    font-size: 14px;
+    line-height: 1.5;
 }
