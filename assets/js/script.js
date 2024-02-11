@@ -4,6 +4,20 @@ const SEARCH_EVENT = "search-book";
 const SAVED_EVENT = "save-books";
 const STORAGE_KEY = "BOOKSHELF_APPS";
 
+const header = document.querySelector(".header");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY >= 100 && window.scrollY < 300) {
+    header.classList.add("none");
+  } else if (window.scrollY > 300) {
+    header.classList.add("header-scrolled");
+    header.classList.remove("none");
+  } else if (window.scrollY < 100) {
+    header.classList.remove("none");
+    header.classList.remove("header-scrolled");
+  }
+});
+
 document.addEventListener("DOMContentLoaded", function () {
   const bookForm = document.getElementById("inputBook");
   bookForm.addEventListener("submit", function (even) {
@@ -17,6 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
     textSpan[0].innerHTML = this.checked
       ? "Selesai dibaca"
       : "Belum selesai dibaca";
+  });
+
+  const searchInput = document.getElementById("searchBookTitle");
+  searchInput.addEventListener("keyup", function (event) {
+    event.preventDefault();
+    document.dispatchEvent(new Event(SEARCH_EVENT));
   });
 
   const searchBook = document.getElementById("searchBook");
@@ -44,23 +64,8 @@ function addBook() {
     isComplete
   );
   books.push(bookObject);
-  const toast = document.createElement("div");
-  toast.classList.add("toast");
 
-  toast.style.opacity = "1";
-  toast.style.bottom = "10px";
-  toast.style.visibility = "visible";
-  toast.style.maxWidth = "300px";
-  toast.innerText = `Buku berhasil ${bookTitle} ditambahkan`;
-  document.body.append(toast);
-
-  setTimeout(() => {
-    toast.style.opacity = "0";
-    toast.style.bottom = "0px";
-    toast.style.visibility = "hidden";
-    toast.style.borderColor = "transparent";
-    toast.style.background = "transparent";
-  }, 1500);
+  showNotification("Buku berhasil ditambahkan");
 
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
@@ -116,6 +121,9 @@ function makeBook(bookObject) {
   const divAction = document.createElement("div");
   divAction.classList.add("action");
 
+  const iconEdit = document.createElement("div");
+  iconEdit.classList.add("fa-solid", "fa-pencil");
+
   const iconDelete = document.createElement("div");
   iconDelete.classList.add("fa", "fa-trash");
 
@@ -128,6 +136,14 @@ function makeBook(bookObject) {
   article.append(section);
   article.append(divAction);
   article.setAttribute("id", `book-${bookObject.id}`);
+
+  const editButton = document.createElement("button");
+  editButton.classList.add("button-edit");
+  editButton.append(iconEdit);
+  divAction.append(editButton);
+  editButton.addEventListener("click", function () {
+    editBookFromList(bookObject.id);
+  });
 
   if (!bookObject.isComplete) {
     const completeButton = document.createElement("button");
@@ -205,9 +221,27 @@ function addBookToIncompleteList(bookId) {
   saveData();
 }
 
+function showNotification(message) {
+  const toast = document.createElement("div");
+  toast.classList.add("toast");
+  toast.style.opacity = "1";
+  toast.style.bottom = "10px";
+  toast.style.visibility = "visible";
+  toast.style.maxWidth = "300px";
+  toast.innerText = message;
+  document.body.append(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.bottom = "0px";
+    toast.style.visibility = "hidden";
+    toast.style.borderColor = "transparent";
+    toast.style.background = "transparent";
+  }, 1500);
+}
+
 function deleteBookFromList(bookId) {
   const bookTarget = findBookIndex(bookId);
-  const book = findBook(bookId);
 
   const body = document.querySelector("body");
 
@@ -244,9 +278,6 @@ function deleteBookFromList(bookId) {
     background.style.pointerEvents = "none";
   });
 
-  const toast = document.createElement("div");
-  toast.classList.add("toast");
-
   const btnDelete = document.createElement("a");
   btnDelete.setAttribute("class", `btn2`);
   btnDelete.innerText = "Hapus";
@@ -260,47 +291,123 @@ function deleteBookFromList(bookId) {
     background.style.opacity = "0";
     background.style.pointerEvents = "none";
 
-    toast.style.opacity = "1";
-    toast.style.bottom = "10px";
-    toast.style.visibility = "visible";
-    toast.style.maxWidth = "300px";
-    toast.innerText = "Buku berhasil dihapus";
-    document.body.append(toast);
-
-    setTimeout(() => {
-      toast.style.opacity = "0";
-      toast.style.bottom = "0px";
-      toast.style.visibility = "hidden";
-      toast.style.borderColor = "transparent";
-      toast.style.background = "transparent";
-    }, 1500);
+    showNotification("Buku telah dihapus");
   });
 
   const buttonContainer = document.createElement("div");
-  buttonContainer.setAttribute("class", `btns`);
+  buttonContainer.setAttribute("class", "btns");
   buttonContainer.append(btnDelete, btnCancel);
 
   popupAlert.append(icon, description, buttonContainer);
 
   body.append(input, background, popupAlert);
+}
 
-  // if (bookTarget === -1) return;
-  // if (
-  //   window.confirm(`Hapus buku ${book.title} (${book.author} : ${book.year}) ?`)
-  // ) {
-  //   books.splice(bookTarget, 1);
-  // }
-  // document.dispatchEvent(new Event(RENDER_EVENT));
-  // saveData();
+function editBookFromList(bookId) {
+  const bookIndex = findBookIndex(bookId);
+  if (bookIndex === -1) return;
+  const bookToEdit = books[bookIndex];
+  console.log(bookToEdit);
+
+  const formContainer = document.createElement("div");
+  formContainer.classList.add("form-edit-container");
+  formContainer.style.opacity = "1";
+  formContainer.style.position = "fixed";
+  formContainer.style.pointerEvents = "auto";
+
+  formElement = document.createElement("form");
+  formElement.id = "editBookForm";
+
+  const background = document.createElement("div");
+  background.classList.add("blur-background");
+  background.style.opacity = "1";
+  background.style.pointerEvents = "auto";
+
+  formElement.innerHTML = `
+      <h2>Edit Buku</h2>
+      <div class="input">
+      <label for="bookTitle">Judul: </label>
+      <input type="text" id="bookTitle" value="${bookToEdit.title}" required />
+      </div>
+      <div class="input">
+      <label for="bookAuthor">Penulis: </label>
+      <input type="text" id="bookAuthor" value="${
+        bookToEdit.author
+      }" required />
+      </div>
+      <div class="input">
+      <label for="bookYear">Tahun Terbit:</label>
+      <input type="text" id="bookYear" value="${bookToEdit.year}" required />
+      </div>
+
+      <div class="input-inline">
+      <label for="IsComplete">Selesai dibaca</label>
+      <input id="IsComplete" type="checkbox" ${
+        bookToEdit.isComplete ? "checked" : ""
+      } />
+       </div>
+
+      
+      </div>
+    `;
+
+  const btnEdit = document.createElement("button");
+  btnEdit.setAttribute("type", `submit`);
+  btnEdit.innerText = "Edit";
+  btnEdit.setAttribute("class", `btn3`);
+
+  const btnCancel = document.createElement("a");
+  btnCancel.setAttribute("class", `btn1`);
+  btnCancel.innerText = "Batal";
+  btnCancel.addEventListener("click", function (event) {
+    event.preventDefault();
+    formContainer.style.opacity = "0";
+    formContainer.style.pointerEvents = "none";
+    background.style.opacity = "0";
+    background.style.pointerEvents = "none";
+  });
+
+  formElement.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const editedBook = {
+      bookId,
+      title: formElement.querySelector("#bookTitle").value,
+      author: formElement.querySelector("#bookAuthor").value,
+      year: formElement.querySelector("#bookYear").value,
+      isComplete: formElement.querySelector("#IsComplete").checked,
+    };
+
+    books[bookIndex] = editedBook;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
+    formContainer.style.opacity = "0";
+    formContainer.style.pointerEvents = "none";
+    background.style.opacity = "0";
+    background.style.pointerEvents = "none";
+    showNotification("Buku berhasil diubah");
+  });
+
+  const buttonContainer = document.createElement("div");
+  buttonContainer.setAttribute("class", "btns");
+  buttonContainer.append(btnEdit, btnCancel);
+
+  formElement.append(buttonContainer);
+  formContainer.append(formElement);
+  document.body.append(formContainer, background);
 }
 
 document.addEventListener(SEARCH_EVENT, function () {
   const searchList = document.getElementById("searchBookshelfList");
   searchList.innerHTML = "";
-  const searchBookTitle = document.getElementById("searchBookTitle").value;
+  const searchBook = document.getElementById("searchBookTitle").value;
 
   for (const book of books) {
-    if (book.title.toLowerCase().includes(searchBookTitle.toLowerCase())) {
+    if (
+      book.title.toLowerCase().includes(searchBook.toLowerCase()) &&
+      searchBook !== "" &&
+      searchBook !== " "
+    ) {
       const bookElement = makeBook(book);
       searchList.append(bookElement);
     }

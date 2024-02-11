@@ -9,11 +9,29 @@ body, input, button {
     font-family: 'Open Sans', sans-serif;
 }
 
+.header {
+    transition: all 0.5s;
+    padding:10px 50px ;
+    position: sticky;
+    top: 0;
+    opacity: 0.8;
+}
+
+.none {
+    transform: translate(0,-50px);
+    opacity: 0;
+}
+
 header h1 {
-    margin-top: 32px;
+    margin-top: 15px;
     text-align: center;
     font-size: 32px;
     color: #2D3E50;
+    opacity: 1;
+}
+
+.header-scrolled {
+    background-color: #eaf3fa;
 }
 
 .card-banner {
@@ -50,7 +68,7 @@ header h1 {
     margin-bottom: 10px;
 }
 
-.form-container > form > .input {
+ form > .input {
     margin: 8px 0;
 }
 
@@ -84,6 +102,11 @@ header h1 {
     width: 100%;
     padding: 8px;
     border-radius: 5px;
+    border: none;
+    margin: 5px;
+}
+.form-container > form > .input > input:focus {
+    outline: none;
 }
 
 
@@ -92,7 +115,7 @@ header h1 {
     font-weight: bold;
 }
 
-.form-container > form > .input_inline {
+ form > .input_inline {
     margin: 12px 0;
     display: flex;
     align-items: center;
@@ -185,6 +208,17 @@ header h1 {
     justify-content: flex-end;
     align-items: end;
 }
+.button-edit {
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    margin: 4px;
+}
+
+.button-edit:hover {
+    background-color: lightblue;
+    cursor: pointer;
+}
 
 .button-delete {
     border: none;
@@ -226,7 +260,7 @@ header h1 {
     color: #fff
 }
 
-.popup-alert {
+.popup-alert , .form-edit-container {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -286,19 +320,27 @@ header h1 {
 }
 
 .btns .btn1,
-.btns .btn2 {
+.btns .btn2,
+.btns .btn3 {
+    cursor: pointer;
     background: #999999;
     border-color: #999999;
     color: white;
     font-size: 18px;
     border-radius: 5px;
-    padding: 10px;
+    padding: 10px 20px;
 }
 
 .btns .btn2 {
-    border-color: #ff3333;
+    border: 1px solid #ff3333;
     background: #ff3333;
 }
+
+.btns .btn3 {
+    border-color: #2d3e50;
+    background: #2d3e50;
+}
+
 
 .btns .btn1{
     margin-left: 20px;
@@ -307,13 +349,13 @@ header h1 {
 .btns .btn1:hover {
     transition: .5s;
     background: #696969;
-    border-color: #696969;
 }
 
 .btns .btn2:hover {
     transition: .5s;
-    background: #ca0101;
-    border-color: #ca0101;
+    border-color: #ff3333;
+    background: transparent;
+    color: #ff3333;
 }
 
 .toast {
@@ -345,4 +387,42 @@ header h1 {
     opacity: 0.2;
     pointer-events: none;
     transition: all 0.3s ease;
+}
+
+.form-edit-container{
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-edit-container input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin: 5px;
+}
+
+.form-edit-container input:focus {
+    outline: none;
+}
+
+.form-edit-container label {
+    width: 100%;
+    color: #2D3E50;
+    font-weight: bold;
+    text-align: start;
+}
+
+.form-edit-container .input-inline {
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.form-edit-container h2 {
+    text-align: center;
+    color: #2D3E50;
 }
