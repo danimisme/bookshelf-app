@@ -44,7 +44,23 @@ function addBook() {
     isComplete
   );
   books.push(bookObject);
-  alert(`Buku ${bookTitle} berhasil ditambahkan`);
+  const toast = document.createElement("div");
+  toast.classList.add("toast");
+
+  toast.style.opacity = "1";
+  toast.style.bottom = "10px";
+  toast.style.visibility = "visible";
+  toast.style.maxWidth = "300px";
+  toast.innerText = `Buku berhasil ${bookTitle} ditambahkan`;
+  document.body.append(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.bottom = "0px";
+    toast.style.visibility = "hidden";
+    toast.style.borderColor = "transparent";
+    toast.style.background = "transparent";
+  }, 1500);
 
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
@@ -192,14 +208,90 @@ function addBookToIncompleteList(bookId) {
 function deleteBookFromList(bookId) {
   const bookTarget = findBookIndex(bookId);
   const book = findBook(bookId);
+
+  const body = document.querySelector("body");
+
   if (bookTarget === -1) return;
-  if (
-    window.confirm(`Hapus buku ${book.title} (${book.author} : ${book.year}) ?`)
-  ) {
+  const input = document.createElement("input");
+  input.setAttribute("type", `checkbox`);
+  input.setAttribute("id", `check`);
+
+  const icon = document.createElement("i");
+  icon.classList.add("fa-solid", "fa-question");
+
+  const popupAlert = document.createElement("div");
+  popupAlert.classList.add("popup-alert");
+  popupAlert.style.opacity = "1";
+  popupAlert.style.position = "fixed";
+  popupAlert.style.pointerEvents = "auto";
+
+  const description = document.createElement("h1");
+  description.innerText = "Apakah kamu yakin ingin menghapus buku ini?";
+
+  const background = document.createElement("div");
+  background.classList.add("blur-background");
+  background.style.opacity = "1";
+  background.style.pointerEvents = "auto";
+
+  const btnCancel = document.createElement("a");
+  btnCancel.setAttribute("class", `btn1`);
+  btnCancel.innerText = "Batal";
+  btnCancel.addEventListener("click", function (event) {
+    event.preventDefault();
+    popupAlert.style.opacity = "0";
+    popupAlert.style.pointerEvents = "none";
+    background.style.opacity = "0";
+    background.style.pointerEvents = "none";
+  });
+
+  const toast = document.createElement("div");
+  toast.classList.add("toast");
+
+  const btnDelete = document.createElement("a");
+  btnDelete.setAttribute("class", `btn2`);
+  btnDelete.innerText = "Hapus";
+  btnDelete.addEventListener("click", function (event) {
+    event.preventDefault();
     books.splice(bookTarget, 1);
-  }
-  document.dispatchEvent(new Event(RENDER_EVENT));
-  saveData();
+    document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
+    popupAlert.style.opacity = "0";
+    popupAlert.style.pointerEvents = "none";
+    background.style.opacity = "0";
+    background.style.pointerEvents = "none";
+
+    toast.style.opacity = "1";
+    toast.style.bottom = "10px";
+    toast.style.visibility = "visible";
+    toast.style.maxWidth = "300px";
+    toast.innerText = "Buku berhasil dihapus";
+    document.body.append(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = "0";
+      toast.style.bottom = "0px";
+      toast.style.visibility = "hidden";
+      toast.style.borderColor = "transparent";
+      toast.style.background = "transparent";
+    }, 1500);
+  });
+
+  const buttonContainer = document.createElement("div");
+  buttonContainer.setAttribute("class", `btns`);
+  buttonContainer.append(btnDelete, btnCancel);
+
+  popupAlert.append(icon, description, buttonContainer);
+
+  body.append(input, background, popupAlert);
+
+  // if (bookTarget === -1) return;
+  // if (
+  //   window.confirm(`Hapus buku ${book.title} (${book.author} : ${book.year}) ?`)
+  // ) {
+  //   books.splice(bookTarget, 1);
+  // }
+  // document.dispatchEvent(new Event(RENDER_EVENT));
+  // saveData();
 }
 
 document.addEventListener(SEARCH_EVENT, function () {

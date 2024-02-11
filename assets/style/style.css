@@ -225,3 +225,124 @@ header h1 {
     cursor: pointer;
     color: #fff
 }
+
+.popup-alert {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    width: 450px;
+    background: #f2f2f2;
+    text-align: center;
+    align-items: center;
+    padding: 40px;
+    border: 1px solid #b3b3b3;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, .2);
+    z-index: 5;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.97);
+    transition: all 0.3s ease;
+}
+
+#check:checked~.popup-alert {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+#check:checked~.background {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#check {
+    display: none;
+}
+
+.popup-alert i {
+    font-size: 60px;
+    color: #f23b26;
+    border: 5px solid #f23b26;
+    padding: 20px 40px;
+    border-radius: 50%;
+    margin: -10px 0 20px 0;
+}
+
+.popup-alert h1 {
+    font-size: 20px;
+    color: #1b2631;
+    margin-bottom: 5px;
+}
+
+.popup-alert label {
+    font-size: 15px;
+    color: #404040;
+}
+
+.popup-alert .btns {
+    margin-top: 30px;
+    padding: 5px;
+}
+
+.btns .btn1,
+.btns .btn2 {
+    background: #999999;
+    border-color: #999999;
+    color: white;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.btns .btn2 {
+    border-color: #ff3333;
+    background: #ff3333;
+}
+
+.btns .btn1{
+    margin-left: 20px;
+}
+
+.btns .btn1:hover {
+    transition: .5s;
+    background: #696969;
+    border-color: #696969;
+}
+
+.btns .btn2:hover {
+    transition: .5s;
+    background: #ca0101;
+    border-color: #ca0101;
+}
+
+.toast {
+    display: flex;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    margin: auto;
+    padding: 10px 20px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #aaaaaa;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    background-color: #2D3E50;
+    color: white;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.9s ease-in-out;
+}
+
+.blur-background {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0.2;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
