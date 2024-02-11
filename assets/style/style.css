@@ -1,0 +1,227 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    /* border: 1px solid black; */
+}
+
+body, input, button {
+    font-family: 'Open Sans', sans-serif;
+}
+
+header h1 {
+    margin-top: 32px;
+    text-align: center;
+    font-size: 32px;
+    color: #2D3E50;
+}
+
+.card-banner {
+    display: flex;
+    gap: 32px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 100px;
+    margin-top: 32px;
+}
+
+
+.banner-image{
+    flex: 2;
+}
+
+.banner-image img {
+    width: 100%;
+}
+
+.form-container {
+    flex: 1;
+    display: flex;
+    background-color: #eaf3fa;
+    flex-direction: column;
+    padding: 24px;
+    /* box-shadow: 0px 4px 8px 0  rgba(2, 23, 35, 0.2); */
+    border-radius: 10px;
+}
+
+.form-container > h3 {
+    text-align: center;
+    color: #2D3E50;
+    margin-bottom: 10px;
+}
+
+.form-container > form > .input {
+    margin: 8px 0;
+}
+
+.form-container > form > button {
+    background-color: #2D3E50;
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    display: block;
+    width: 100%;
+    padding: 8px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: all .30s ease-in-out;
+}
+
+.form-container > form > button:hover{
+    border: 3px solid #2D3E50;
+    color: #2D3E50;
+    background-color: transparent;
+}
+
+
+
+.form-container > form > button > span {
+    font-weight: bold;
+}
+
+.form-container > form > .input > input {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+
+.form-container > form > .input > label {
+    color: #2D3E50;
+    font-weight: bold;
+}
+
+.form-container > form > .input_inline {
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+}
+
+.form-container > form > .input_inline > label {
+    color: #2D3E50;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.rak-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px 50px;
+}
+
+.search_container, .book_shelf {
+    flex: 1;
+    margin: 24px;
+    padding: 24px;
+    background-color: #eaf3fa;
+    border-radius: 16px;
+}
+
+.search_container input {
+    border: none;
+    padding: 5px;
+    width: 90%;
+}
+.search_container input:focus {
+    outline: none;
+    border: none;
+}
+
+.search_container button {
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+}
+
+.input-search-container {
+    background-color: #fff;
+    height: 35px;
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+}
+
+
+.book_item {
+    display: flex;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px 0  rgba(2, 23, 35, 0.2);
+}
+
+.book_info h4 {
+    margin-bottom: 10px;
+}
+
+.book_info  p {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.info-incomplete {
+    display: block;
+    background-color: salmon;
+    color: #fff;
+    margin-top: 5px;
+    border-radius: 5px;
+    padding: 0 8px;
+}
+
+.info-complete {
+    display: block;
+    background-color: rgb(0, 255, 60);
+    margin-top: 5px;
+    border-radius: 5px;
+    padding: 0 8px;
+}
+
+.action {
+    display: flex;
+    justify-content: flex-end;
+    align-items: end;
+}
+
+.button-delete {
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    margin: 4px;
+}
+
+.button-delete:hover {
+    background-color: salmon;
+    cursor: pointer;
+    color: #fff
+}
+
+.button-complete {
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    margin: 4px;
+}
+
+.button-complete:hover {
+    background-color: rgb(0, 255, 60);
+    cursor: pointer;
+    color: #fff
+}
+
+.button-undo {
+    border: none;
+    background-color: rgb(0, 255, 60);
+    border-radius: 50%;
+    padding: 8px;
+    margin: 4px;
+}
+
+.button-undo:hover {
+    background-color: rgb(39, 44, 40);
+    cursor: pointer;
+    color: #fff
+}

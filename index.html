@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bookshelf Apps</title>
+    <link rel="stylesheet" href="./assets/style/style.css" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <h1>Bookshelf Apps</h1>
+    </header>
+    <main>
+      <div class="card-banner">
+        <div class="form-container">
+          <h3>Masukkan Buku Baru</h3>
+          <form id="inputBook">
+            <div class="input">
+              <label for="inputBookTitle">Judul</label>
+              <input
+                id="inputBookTitle"
+                type="text"
+                placeholder="Masukkan judul buku ..."
+                required
+              />
+            </div>
+            <div class="input">
+              <label for="inputBookAuthor">Penulis</label>
+              <input
+                id="inputBookAuthor"
+                type="text"
+                required
+                placeholder="Masukkan nama penulis ..."
+              />
+            </div>
+            <div class="input">
+              <label for="inputBookYear">Tahun</label>
+              <input
+                id="inputBookYear"
+                type="number"
+                placeholder="Masukkan tahun ..."
+                required
+              />
+            </div>
+            <div class="input_inline">
+              <label for="inputBookIsComplete">Selesai dibaca</label>
+              <input id="inputBookIsComplete" type="checkbox" />
+            </div>
+            <button id="bookSubmit" type="submit">
+              Masukkan Buku ke rak <span>Belum selesai dibaca</span>
+            </button>
+          </form>
+        </div>
+        <div class="banner-image">
+          <img src="assets/images/banner-crop.jpg" alt="" />
+        </div>
+      </div>
+
+      <div class="rak-container">
+        <div class="book_shelf">
+          <h3>Belum selesai dibaca</h3>
+
+          <div id="incompleteBookshelfList" class="book_list"></div>
+        </div>
+
+        <div class="book_shelf">
+          <h3>Selesai dibaca</h3>
+
+          <div id="completeBookshelfList" class="book_list"></div>
+        </div>
+
+        <div class="search_container">
+          <form id="searchBook">
+            <div class="input-search-container">
+              <input
+                id="searchBookTitle"
+                type="text"
+                placeholder="Cari buku ..."
+              />
+              <button id="searchSubmit" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+
+          <div id="searchBookshelfList" class="book_list"></div>
+        </div>
+      </div>
+    </main>
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
