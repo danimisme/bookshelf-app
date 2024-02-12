@@ -371,10 +371,10 @@ function editBookFromList(bookId) {
     event.preventDefault();
 
     const editedBook = {
-      bookId,
+      id: bookId,
       title: formElement.querySelector("#bookTitle").value,
       author: formElement.querySelector("#bookAuthor").value,
-      year: formElement.querySelector("#bookYear").value,
+      year: parseInt(formElement.querySelector("#bookYear").value),
       isComplete: formElement.querySelector("#IsComplete").checked,
     };
 

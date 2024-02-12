@@ -438,3 +438,18 @@ footer p {
     font-size: 14px;
     line-height: 1.5;
 }
+
+@media screen and (max-width: 900px) {
+    .card-banner {
+        flex-direction: column-reverse;
+        gap: 10px;
+    }
+
+    .rak-container {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 10px;
+        align-items: center;
+    }
+    
+}
