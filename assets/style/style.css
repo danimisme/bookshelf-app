@@ -451,5 +451,30 @@ footer p {
         gap: 10px;
         align-items: center;
     }
+
+    .card-banner{
+        padding: 10px;
+    }
+
+    .rak-container{
+        padding: 10px;
+        margin: 10px;
+    }
+
+    .book_shelf, .search_container, .form-container {
+        width: 80%;
+    }
+
     
+}
+
+@media screen and (max-width: 600px) { 
+    .book_item{
+        display: flex;
+        flex-direction: column;
+    }
+    .book_shelf, .search_container, .form-container {
+        width: 100%;
+    }
+
 }
